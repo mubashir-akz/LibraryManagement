@@ -8,32 +8,69 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="/css/manager/managerLogin.css">
 </head>
-
+<style>
+#otp{
+    margin-top: 13px;
+    color: blue;
+    
+}
+#otpnum{
+    margin-top: 13px;
+    display: none;
+}
+</style>
 <body>
     <div class="sidenav">
         <div class="login-main-text">
-            <h1>Library Manager</h1><br><h2> Login Page</h2><br>
+            <h1>Library Manager</h1><br>
+            <h2> Login Page</h2><br>
             <p>Manager login here to access their profile</p>
         </div>
     </div>
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
+                <% if(messages.error){ %>
+                <div class="alert alert-danger" style="margin-bottom: 1em !important; display: inline-block;">
+                    <%= messages.error %></div>
+                <%}%>
                 <form action="/manager" method="POST">
                     <div class="form-group">
                         <label>User Name</label>
-                        <input type="text" class="form-control" name="userName" placeholder="User Name">
+                        <input type="text" class="form-control" name="userName" placeholder="User Name" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
-                    <button type="submit" class="btn btn-black">Login</button>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <button type="submit" class="btn btn-black">Login</button>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <a href="#"><p id="otp">Login with OTP</p></a>
+                        </div>
+                    </div>
+                    
                 </form>
+                <form action="/manager/otp" method="POST" id="otpnum">
+                    <div class="form-group">
+                        <label>Enter your registered mobile number</label>
+                        <input type="number" class="form-control" name="mobile" placeholder="mobile" required>
+                    </div>
+                    <button type="submit" class="btn btn-black">submit</button>
+                </form>
+                
             </div>
         </div>
     </div>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.js"></script>
+    <script>
+        var otpnumform = document.getElementById('otpnum');
+        document.getElementById('otp').addEventListener('click',()=>{
+            otpnumform.style.display = 'block';
+        })
+    </script>
 </body>
 </html>
