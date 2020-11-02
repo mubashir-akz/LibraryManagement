@@ -24,6 +24,13 @@ function employeeStudentController() {
         }
       });
     },
+    deleteStudent(req, res) {
+      const { studentID } = req.body;
+      db.get().collection('students').deleteOne({ studentID }, (err) => {
+        if (err) throw err;
+        res.redirect('/employee/students');
+      });
+    },
   };
 }
 

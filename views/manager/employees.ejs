@@ -39,10 +39,10 @@
                                         <button type="submit" style="border: none;"><i class="lnr lnr-pencil"
                                                 aria-hidden="true"></i></button>
                                     </form>
-                                    <form action="" method="POST" style="display: inline;" class="pl-4">
-                                        <input type="hidden" value="" name="id">
+                                    <form action="/manager/employeeDelete" method="POST" style="display: inline;" class="pl-4">
+                                        <input type="hidden" value="<%= data.EmpID %>" name="EmpID">
                                         <button type="submit" style="border: none;"><i class="lnr lnr-trash"
-                                                aria-hidden="true"></i></button>
+                                                aria-hidden="true" onclick="return confirm('Are you sure you want to Delete?');" ></i></button>
                                     </form>
                                 </td>
                             </tr>

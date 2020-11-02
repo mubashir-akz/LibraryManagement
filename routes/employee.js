@@ -20,5 +20,6 @@ router.post('/', employeeAuthController().postLogin);
 router.post('/otp', employeeAuthController().otpLogin);
 router.post('/otpget', employeeAuthController().otpGetPost);
 router.post('/addStudent', employeeStudentController().addStudent);
+router.post('/studentDelete', employeeStudentController().deleteStudent);
 
 module.exports = router;

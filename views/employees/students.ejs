@@ -29,7 +29,7 @@
                         <tbody>
                             <% datas.forEach((data)=>{ %>
                             <tr>
-                                <th scope="row">Emp-<%= data.studentID %></th>
+                                <th scope="row">Student-<%= data.studentID %></th>
                                 <td></td>
                                 <td><%= data.name %></td>
                                 <td><%= data.email %></td>
@@ -41,9 +41,9 @@
                                         <button type="submit" style="border: none;"><i class="lnr lnr-pencil"
                                                 aria-hidden="true"></i></button>
                                     </form>
-                                    <form action="" method="POST" style="display: inline;" class="pl-4">
-                                        <input type="hidden" value="" name="id">
-                                        <button type="submit" style="border: none;"><i class="lnr lnr-trash"
+                                    <form action="/employee/studentDelete" method="POST" style="display: inline;" class="pl-4">
+                                        <input type="hidden" value="<%= data.studentID %>" name="studentID">
+                                        <button type="submit" style="border: none;" onclick="return confirm('Are you sure you want to Delete?');"><i class="lnr lnr-trash"
                                                 aria-hidden="true"></i></button>
                                     </form>
                                 </td>

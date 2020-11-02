@@ -23,6 +23,13 @@ function managerEmployeeController() {
         }
       });
     },
+    deleteEmployee(req, res) {
+      const { EmpID } = req.body;
+      db.get().collection('employees').deleteOne({ EmpID }, (err) => {
+        if (err) throw err;
+        res.redirect('/manager/employees');
+      });
+    },
   };
 }
 module.exports = managerEmployeeController;
