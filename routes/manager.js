@@ -13,7 +13,7 @@ router.get('/', managerDashProtect, managerAuthController().login);
 router.get('/dash', managerAuthProtect, managerDashController().dashboard);
 router.get('/logout', managerAuthController().logout);
 router.get('/otpget', managerAuthController().otpGet);
-router.get('/employees', managerEmployeeController().employees);
+router.get('/employees', managerAuthProtect, managerEmployeeController().employees);
 
 // postRoutes
 router.post('/', managerAuthController().postLogin);

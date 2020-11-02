@@ -5,6 +5,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const managerRoute = require('./routes/manager');
+const employeeRoute = require('./routes/employee');
 
 const app = express();
 // load config
@@ -36,12 +37,22 @@ app.use('/manager', session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 },
 }));
 
+app.use('/employee', session({
+  name: 'employeeCookie',
+  secret: process.env.COOKIE_SECRET,
+  store: new MongoStore({ url: 'mongodb://localhost:27017/Library' }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 },
+}));
+
 // set template engine
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.use('/manager', managerRoute);
+app.use('/employee', employeeRoute);
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
