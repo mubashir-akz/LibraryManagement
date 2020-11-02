@@ -80,7 +80,6 @@ function managerAuthController() {
 
       axios(config)
         .then((response) => {
-          console.log(response.data.status);
           if (response.data.status === 'success') {
             db.get().collection('managerAuth').findOne({}, (err, result) => {
               if (err) throw err;
