@@ -18,7 +18,7 @@ function employeeAuthController() {
         if (err) throw err;
         if (EmpIDs === data[0].EmpID && password === data[0].password) {
           // eslint-disable-next-line no-underscore-dangle
-          req.session.employee = data[0].EmpID;
+          req.session.employee = { empID: data[0].EmpID, name: data[0].name };
           res.redirect('/employee/dash');
         } else {
           req.flash('error', 'Invalid username or password');
@@ -86,7 +86,7 @@ function employeeAuthController() {
             db.get().collection('employees').findOne({ EmpID: empid }, (err, result) => {
               if (err) throw err;
               // eslint-disable-next-line no-underscore-dangle
-              req.session.employee = result._id;
+              req.session.employee = { empID: result.EmpID, name: result.name };
               res.redirect('/employee/dash');
             });
           }

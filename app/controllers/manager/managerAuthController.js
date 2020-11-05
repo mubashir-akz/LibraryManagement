@@ -17,7 +17,7 @@ function managerAuthController() {
         if (err) throw err;
         if (userName === data.username && password === data.password) {
           // eslint-disable-next-line no-underscore-dangle
-          req.session.manager = data._id;
+          req.session.manager = { id: data._id, name: data.name };
           res.redirect('/manager/dash');
         } else {
           req.flash('error', 'Invalid username or password');
@@ -84,7 +84,7 @@ function managerAuthController() {
             db.get().collection('managerAuth').findOne({}, (err, result) => {
               if (err) throw err;
               // eslint-disable-next-line no-underscore-dangle
-              req.session.manager = result._id;
+              req.session.manager = { id: result._id, name: result.name };
               res.redirect('/manager/dash');
             });
           }

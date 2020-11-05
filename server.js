@@ -22,12 +22,6 @@ app.use(express.json());
 // flash
 app.use(flash());
 
-// global middlewares
-app.use((req, res, next) => {
-  res.locals.manager = 'Sarath Raj C K';
-  next();
-});
-
 app.use('/manager', session({
   name: 'managerCookie',
   secret: process.env.COOKIE_SECRET,
@@ -45,6 +39,21 @@ app.use('/employee', session({
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24 },
 }));
+
+// global middlewares
+app.use('/manager', (req, res, next) => {
+  if (req.session.manager !== undefined) {
+    res.locals.manager = req.session.manager.name;
+  }
+  next();
+});
+
+app.use('/employee', (req, res, next) => {
+  if (req.session.employee !== undefined) {
+    res.locals.employee = req.session.employee.name;
+  }
+  next();
+});
 
 // set template engine
 app.set('views', path.join(__dirname, '/views'));
