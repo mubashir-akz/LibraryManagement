@@ -118,15 +118,15 @@
 			animate: 800
 		});
 
-		var updateInterval = 3000; // in milliseconds
+		// var updateInterval = 3000; // in milliseconds
 
-		setInterval(function() {
-			var randomVal;
-			randomVal = getRandomInt(0, 100);
+		// setInterval(function() {
+		// 	var randomVal;
+		// 	randomVal = getRandomInt(0, 100);
 
-			sysLoad.data('easyPieChart').update(randomVal);
-			sysLoad.find('.percent').text(randomVal);
-		}, updateInterval);
+		// 	sysLoad.data('easyPieChart').update(randomVal);
+		// 	sysLoad.find('.percent').text(randomVal);
+		// }, updateInterval);
 
 		function getRandomInt(min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
