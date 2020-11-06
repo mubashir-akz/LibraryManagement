@@ -9,7 +9,6 @@ function employeeStudentController() {
       });
     },
     addStudent(req, res) {
-      console.log(req.body);
       const newStudent = req.body;
       db.get().collection('students').countDocuments({ studentID: newStudent.studentID }, { limit: 1 }, (err, data) => {
         if (err) throw err;
