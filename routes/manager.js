@@ -24,5 +24,6 @@ router.post('/otpget', managerAuthController().otpGetPost);
 router.post('/addEmp', managerEmployeeController().addEmployee);
 router.post('/employeeDelete', managerEmployeeController().deleteEmployee);
 router.post('/addCategory', managerBookCategoryController().addCategory);
+router.post('/categoryDelete', managerBookCategoryController().deleteCatagory);
 
 module.exports = router;

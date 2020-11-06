@@ -18,23 +18,36 @@
                         <thead>
                             <tr>
                                 <th scope="col">Category</th>
-                                <th scope="col"></th>
                                 <th scope="col">Subjects</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        
-                        </tbody>
+                        <% lists.forEach(list => { %>
+                    <tr>
+                        <td><%= list.category %></td>
+                        <td><% list.subjects.forEach(sub => { %>
+                            <%= sub %> <br>
+                            <%}) %></td>
+                        <td>
+                            <form action="/manager/categoryDelete" method="POST" style="display: inline;" class="pl-4">
+                                <input type="hidden" value="<%= list.category %> " name="category">
+                                <button type="submit" style="border: none;"><i class="lnr lnr-trash" aria-hidden="true"
+                                        onclick="return confirm('Are you sure you want to Delete?');"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                    </tbody>
                     </table>
 
                 </div>
-        <!-- Modal: modalPoll -->
-             </div>
-             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#category">+ Add new
+                <!-- Modal: modalPoll -->
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#category">+ Add new
                 category</button>
-                <div class="modal fade right" id="category" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal fade right" id="category" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true" data-backdrop="false">
                 <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
                     <div class="modal-content">
                         <!--Header-->
@@ -51,43 +64,45 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="CategoryName">Category Name</label>
-                                    <input type="text" class="form-control" id="CategoryName" name="CategoryName" placeholder="Category name" required>
+                                    <input type="text" class="form-control" id="CategoryName" name="CategoryName"
+                                        placeholder="Category name" required>
                                 </div>
-                                <div id="textboxDiv" style="margin-bottom: 10px;"></div> 
+                                <div id="textboxDiv" style="margin-bottom: 10px;"></div>
                                 <button type="button" id="Add">Add Subject</button>
                                 <button type="button" id="Remove">Remove Subject</button>
-                              
-                            
-                            <div class="modal-footer justify-content-center mt-4">
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
-    
-                                <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
-                            </div>
+
+
+                                <div class="modal-footer justify-content-center mt-4">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+
+                                    <a type="button" class="btn btn-outline-primary waves-effect"
+                                        data-dismiss="modal">Cancel</a>
+                                </div>
                         </form>
 
 
                     </div>
                     <!--Footer-->
-                    
+
                 </div>
-            </div>   
+            </div>
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-        
-        $(document).ready(function() {  
-            let sub = 0;
-            $("#Add").on("click", function() {  
-                sub+=1;
-                $("#textboxDiv").append(`<div><br><input type="text" class="form-control" name="subject${sub}" placeholder="Enter name of Subject ${sub}" required><br></div>`);  
-            });  
-            $("#Remove").on("click", function() {  
-                sub-=1;
-                $("#textboxDiv").children().last().remove();  
-            });  
-        }); 
+
+    $(document).ready(function () {
+        let sub = 0;
+        $("#Add").on("click", function () {
+            sub += 1;
+            $("#textboxDiv").append(`<div><br><input type="text" class="form-control" name="subject${sub}" placeholder="Enter name of Subject ${sub}" required><br></div>`);
+        });
+        $("#Remove").on("click", function () {
+            sub -= 1;
+            $("#textboxDiv").children().last().remove();
+        });
+    }); 
 </script>
 
 <%- include('partials/footer.ejs') %>
