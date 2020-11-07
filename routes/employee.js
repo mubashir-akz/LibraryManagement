@@ -6,6 +6,7 @@ const employeeAuthController = require('../app/controllers/employee/employeeAuth
 const employeeDashController = require('../app/controllers/employee/employeeDashController');
 const employeeStudentController = require('../app/controllers/employee/employeeStudentController');
 const employeeBookController = require('../app/controllers/employee/employeeBookController');
+const employeeBorrowController = require('../app/controllers/employee/employeeBorrowController');
 const employeeDashProtect = require('../app/middlewares/employee/employeeDashProtect');
 const employeeAuthProtect = require('../app/middlewares/employee/employeeAuthProtect');
 
@@ -16,6 +17,7 @@ router.get('/otpget', employeeAuthController().otpGet);
 router.get('/students', employeeAuthProtect, employeeStudentController().students);
 router.get('/books', employeeAuthProtect, employeeBookController().listBooks);
 router.get('/getCategory', employeeBookController().getCategory);
+router.get('/borrow', employeeAuthProtect, employeeBorrowController().listBorrow);
 router.get('/logout', employeeAuthController().logout);
 
 // postRoutes
@@ -27,5 +29,6 @@ router.post('/studentDelete', employeeStudentController().deleteStudent);
 router.post('/getSubjects', employeeBookController().getSubject);
 router.post('/addBook', employeeBookController().addBook);
 router.post('/bookDelete', employeeBookController().deleteBook);
+router.post('/borrowBook',employeeBorrowController().borrowBook);
 
 module.exports = router;
