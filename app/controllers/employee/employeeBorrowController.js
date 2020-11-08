@@ -28,13 +28,28 @@ function employeeBorrowController() {
           db.get().collection('books').countDocuments({ ISBN: isbn }, { limit: 1 }, (err, data) => {
             if (err) throw err;
             if (data === 1) {
-              resolve(checkAndUpdateBookNumber(isbn));
+              resolve(checkIfBook(studentID));
             } else {
               reject();
             }
           });
         }).catch(() => {
           req.flash('error', 'Not a valid ISBN Number');
+          res.redirect('/employee/borrow');
+        });
+      }
+      function checkIfBook(id) {
+        new Promise((resolve, reject) => {
+          db.get().collection('students').findOne({ studentID: id }, (err, data) => {
+            if (err) throw err;
+            if (data.bookTaken) {
+              reject();
+            } else {
+              resolve(checkAndUpdateBookNumber(isbn));
+            }
+          });
+        }).catch(() => {
+          req.flash('error', 'Student has already taken a book ! Please return to take a new one ');
           res.redirect('/employee/borrow');
         });
       }
