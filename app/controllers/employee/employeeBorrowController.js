@@ -1,3 +1,4 @@
+const moment = require('moment');
 const db = require('../../config/mongoConnection');
 
 function employeeBorrowController() {
@@ -6,13 +7,13 @@ function employeeBorrowController() {
       res.render('employees/borrow');
     },
     borrowBook(req, res) {
-      const { studentID, isbn } = req.body;
+      const { studentID, ISBN } = req.body;
       function checkStudent(id) {
         new Promise((resolve, reject) => {
           db.get().collection('students').countDocuments({ studentID: id }, { limit: 1 }, (err, data) => {
             if (err) throw err;
             if (data === 1) {
-              resolve(checkBook(isbn));
+              resolve(checkBook());
             } else {
               reject();
             }
@@ -22,12 +23,12 @@ function employeeBorrowController() {
           res.redirect('/employee/borrow');
         });
       }
-      function checkBook(isbn) {
+      function checkBook() {
         new Promise((resolve, reject) => {
-          db.get().collection('books').countDocuments({ ISBN: isbn }, { limit: 1 }, (err, data) => {
+          db.get().collection('books').countDocuments({ ISBN }, { limit: 1 }, (err, data) => {
             if (err) throw err;
             if (data === 1) {
-              resolve(success());
+              resolve(insertToStudent());
             } else {
               reject();
             }
@@ -37,10 +38,16 @@ function employeeBorrowController() {
           res.redirect('/employee/borrow');
         });
       }
-      function success() {
-        console.log('success');
-        req.flash('error', 'Success');
-        res.redirect('/employee/borrow');
+      function insertToStudent() {
+        const bookTaken = {
+          isbn: ISBN,
+          issue: moment().format('L'),
+          due: moment().add(7, 'days').calendar(),
+        };
+        db.get().collection('students').updateOne({ studentID }, { $set: { bookTaken } }, true, (err) => {
+          if (err) throw err;
+          console.log('data inserted to students collection');
+        });
       }
       checkStudent(studentID);
     },
