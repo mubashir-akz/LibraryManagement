@@ -25,7 +25,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
+                        <% datas.forEach(data => { %>
+                            <tr>
+                                <td>
+                                    StudentID : <%= data.studentDetails.studentID %> <br>
+                                    Name : <%= data.studentDetails.name %> <br>
+                                    Mobile : <%= data.studentDetails.mobile %> <br>
+                                    Course : <%= data.studentDetails.course %> 
+                                </td>
+                                <td><%= data.issue %></td>
+                                <td><%= data.due %></td>
+                                <td>
+                                    ISBN : <%= data.bookDetails.ISBN %> <br>
+                                    Title : <%= data.bookDetails.title %> <br>
+                                    Category : <%= data.bookDetails.category %> <br>
+                                </td>
+                                <% if(data.status == 'Returned'){ %>
+                                    <td style="color: green;"> Returned</td>
+                                    <% }else{ %>
+                                    <td style="color: red;"> Not Returned</td>
+                                    <% } %>
+                            </tr>
+                        <%})%>
                         </tbody>
                     </table>
                 </div>

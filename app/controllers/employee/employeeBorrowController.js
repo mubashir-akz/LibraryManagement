@@ -4,7 +4,35 @@ const db = require('../../config/mongoConnection');
 function employeeBorrowController() {
   return {
     listBorrow(req, res) {
-      res.render('employees/borrow');
+      db.get().collection('borrow').aggregate([
+        {
+          $match: { },
+        },
+        {
+          $lookup: {
+            from: 'books',
+            localField: 'isbn',
+            foreignField: 'ISBN',
+            as: 'bookDetails',
+          },
+        },
+        {
+          $unwind: '$bookDetails',
+        },
+        {
+          $lookup: {
+            from: 'students',
+            localField: 'studentID',
+            foreignField: 'studentID',
+            as: 'studentDetails',
+          },
+        },
+        {
+          $unwind: '$studentDetails',
+        },
+      ]).toArray((err, datas) => {
+        res.render('employees/borrow', { datas });
+      });
     },
     borrowBook(req, res) {
       const { studentID, isbn } = req.body;
@@ -92,7 +120,7 @@ function employeeBorrowController() {
         });
       }
       function insertToBorrow(datas) {
-        const details = { ...datas, studentID };
+        const details = { ...datas, studentID, status: 'Not Returned' };
         db.get().collection('borrow').insertOne(details, (err) => {
           if (err) throw err;
           res.redirect('/employee/borrow');
