@@ -70,7 +70,7 @@ function employeeBorrowController() {
         new Promise((resolve, reject) => {
           db.get().collection('students').findOne({ studentID: id }, (err, data) => {
             if (err) throw err;
-            if (data.bookTaken) {
+            if (data.currentBook) {
               reject();
             } else {
               resolve(checkAndUpdateBookNumber(isbn));
@@ -104,15 +104,15 @@ function employeeBorrowController() {
       }
       function insertToStudent() {
         new Promise((resolve, reject) => {
-          const bookTaken = {
+          const currentBook = {
             isbn,
             issue: moment().format('DD/MM/YYYY'),
             due: moment().add(7, 'days').format('DD/MM/YYYY'),
           };
-          db.get().collection('students').updateOne({ studentID }, { $set: { bookTaken } }, false, (err) => {
+          db.get().collection('students').updateOne({ studentID }, { $set: { currentBook } }, false, (err) => {
             if (err) reject();
             console.log('data inserted to students collection');
-            resolve(insertToBorrow(bookTaken));
+            resolve(insertToBorrow(currentBook));
           });
         }).catch(() => {
           req.flash('error', 'Something went wrong');

@@ -1,0 +1,80 @@
+<%- include('partials/header.ejs') %>
+
+<!-- MAIN -->
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="panel panel-headline">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Returned Books</h3>
+                </div>
+                <div class="panel-body">
+                    <% if(messages.error){ %>
+                        <div class="alert alert-danger" style="margin-bottom: 1em !important; display: inline-block; width: 100%;">
+                            <%= messages.error %></div>
+                        <%}%>
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">Issued Date</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Returned Date</th>
+                                <th scope="col">Student Details</th>
+                                <th scope="col">Book Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                     
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPoll-1">Return Book</button>
+            <!-- Modal: modalPoll -->
+            <div class="modal fade right" id="modalPoll-1" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+                <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header">
+                            <p class="heading lead" style="display: inline;">Return a book</p>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="white-text">×</span>
+                            </button>
+                        </div>
+
+                        <!--Body-->
+                        <form action="/employee/returnBook" method="POST" style="padding: 2em;">
+                            <div class="form-group col-md-12">
+                                <label for="studentID">Student ID</label>
+                                <input type="number" class="form-control" name="studentID" id="studentID" placeholder="studentID" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="isbn">ISBN Number of the Book</label>
+                                <input type="number" class="form-control" id="isbn" name="isbn"
+                                    placeholder="ISBN Number" required>
+                            </div>
+                            
+                            <div class="modal-footer justify-content-center mt-4">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Return</button>
+    
+                                <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <!--Footer-->
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Modal: modalPoll -->
+    </div>
+</div>
+</div>
+
+
+<%- include('partials/footer.ejs') %>

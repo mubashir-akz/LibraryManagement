@@ -7,6 +7,7 @@ const employeeDashController = require('../app/controllers/employee/employeeDash
 const employeeStudentController = require('../app/controllers/employee/employeeStudentController');
 const employeeBookController = require('../app/controllers/employee/employeeBookController');
 const employeeBorrowController = require('../app/controllers/employee/employeeBorrowController');
+const employeeReturnController = require('../app/controllers/employee/employeeReturnController');
 const employeeDashProtect = require('../app/middlewares/employee/employeeDashProtect');
 const employeeAuthProtect = require('../app/middlewares/employee/employeeAuthProtect');
 
@@ -18,6 +19,7 @@ router.get('/students', employeeAuthProtect, employeeStudentController().student
 router.get('/books', employeeAuthProtect, employeeBookController().listBooks);
 router.get('/getCategory', employeeBookController().getCategory);
 router.get('/borrow', employeeAuthProtect, employeeBorrowController().listBorrow);
+router.get('/return', employeeAuthProtect, employeeReturnController().listReturn);
 router.get('/logout', employeeAuthController().logout);
 
 // postRoutes
@@ -29,6 +31,7 @@ router.post('/studentDelete', employeeStudentController().deleteStudent);
 router.post('/getSubjects', employeeBookController().getSubject);
 router.post('/addBook', employeeBookController().addBook);
 router.post('/bookDelete', employeeBookController().deleteBook);
-router.post('/borrowBook',employeeBorrowController().borrowBook);
+router.post('/borrowBook', employeeBorrowController().borrowBook);
+router.post('/returnBook', employeeReturnController().returnBook);
 
 module.exports = router;
