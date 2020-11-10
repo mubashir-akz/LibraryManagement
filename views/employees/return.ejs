@@ -17,15 +17,34 @@
                     <table class="table table-striped table-responsive">
                         <thead>
                             <tr>
+                                <th scope="col">Student Details</th>
+                                <th scope="col">Book Details</th>
                                 <th scope="col">Issued Date</th>
                                 <th scope="col">Due Date</th>
                                 <th scope="col">Returned Date</th>
-                                <th scope="col">Student Details</th>
-                                <th scope="col">Book Details</th>
+                                <th scope="col">Fine Amount</th>
                             </tr>
                         </thead>
                         <tbody>
-                     
+                            <% datas.forEach(data => { %>
+                                <tr>
+                                    <td>
+                                        StudentID : <%= data.studentDetails.studentID %> <br>
+                                        Name : <%= data.studentDetails.name %> <br>
+                                        Mobile : <%= data.studentDetails.mobile %> <br>
+                                        Course : <%= data.studentDetails.course %> 
+                                    </td>
+                                    <td>
+                                        ISBN : <%= data.bookDetails.ISBN %> <br>
+                                        Title : <%= data.bookDetails.title %> <br>
+                                        Category : <%= data.bookDetails.category %> <br>
+                                    </td>
+                                    <td><%= data.issue %></td>
+                                    <td><%= data.due %></td>
+                                    <td><%= data.return %></td>
+                                    <td>₹<%= data.fine %></td>
+                                </tr>
+                            <%})%>
                         </tbody>
                     </table>
                 </div>

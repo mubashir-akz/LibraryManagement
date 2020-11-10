@@ -5,7 +5,35 @@ const db = require('../../config/mongoConnection');
 function employeeReturnController() {
   return {
     listReturn(req, res) {
-      res.render('employees/return');
+      db.get().collection('return').aggregate([
+        {
+          $match: { },
+        },
+        {
+          $lookup: {
+            from: 'books',
+            localField: 'isbn',
+            foreignField: 'ISBN',
+            as: 'bookDetails',
+          },
+        },
+        {
+          $unwind: '$bookDetails',
+        },
+        {
+          $lookup: {
+            from: 'students',
+            localField: 'studentID',
+            foreignField: 'studentID',
+            as: 'studentDetails',
+          },
+        },
+        {
+          $unwind: '$studentDetails',
+        },
+      ]).toArray((err, datas) => {
+        res.render('employees/return', { datas });
+      });
     },
     returnBook(req, res) {
       const { studentID, isbn } = req.body;
@@ -14,6 +42,7 @@ function employeeReturnController() {
           db.get().collection('borrow').findOne({ studentID: stdid, isbn: bkid }, { sort: { _id: -1 } }, (err, result) => {
             if (err) throw err;
             if (result == null) {
+              // eslint-disable-next-line prefer-promise-reject-errors
               reject('notFound');
             } else if (result.status === 'Returned') {
               reject();
